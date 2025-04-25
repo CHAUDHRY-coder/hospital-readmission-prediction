@@ -61,10 +61,10 @@ The initial models tested showed high overall accuracy but highlighted the signi
 
 ## Files in this Repository
 
-*   `SOFTEC_(1)_(1) (3).ipynb`: The main Jupyter Notebook containing all the code for data processing, feature engineering, modeling, evaluation, and prediction.
-*   `train.csv`: The training data file.
-*   `test.csv`: The test data file for generating predictions.
-*   `submission.csv`: The generated submission file with predicted readmission status for the test data (created after running the notebook).
+*   `Readmission Prediction.ipynb`: The main Jupyter Notebook containing all the code for data processing, feature engineering, modeling, evaluation, and prediction.
+*   `Data/train.csv`: The training data file.
+*   `Data/test.csv`: The test data file for generating predictions.
+*   `Data/metaData.csv`: The file containing all the description of all the attributes in tha dataset.
 *   `README.md`: This file.
 
 ## Getting Started
@@ -85,7 +85,7 @@ To run the notebook and reproduce the results:
     pip install pandas numpy matplotlib seaborn scikit-learn xgboost lightgbm
     ```
 2.  **Clone the Repository:** Clone this GitHub repository to your local machine.
-3.  **Open in Jupyter:** Open the `SOFTEC_(1)_(1) (3).ipynb` file in a Jupyter Notebook environment (Jupyter Notebook, JupyterLab, or Google Colab).
+3.  **Open in Jupyter:** Open the `Readmission Prediction.ipynb` file in a Jupyter Notebook environment (Jupyter Notebook, JupyterLab, or Google Colab).
 4.  **Run Cells:** Execute the notebook cells sequentially from top to bottom.
 5.  **Generate Submission:** The notebook will generate a `submission.csv` file in the same directory containing the predicted readmission status for the test dataset.
 
