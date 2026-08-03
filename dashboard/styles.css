@@ -1,0 +1,585 @@
+/* ==========================================================================
+   CSS Variables & Theming - "Modern Editorial Healthcare" (Refined)
+   ========================================================================== */
+:root {
+    /* Color Palette */
+    --bg-color: #F7F7F5; /* A very soft, warm off-white, consistent everywhere */
+    --surface-color: #FFFFFF; /* Pure white for cards to pop against the bg */
+    --text-primary: #1C2321; /* Deepest charcoal/forest green */
+    --text-secondary: #5E6965; /* Muted, readable gray-green */
+    
+    --accent-high-risk: #D95D39; /* Rich, refined Terracotta */
+    --accent-low-risk: #5B8C70; /* Deep, calming Sage */
+    --accent-neutral: #EBEBE8; /* Light warm gray for structural lines */
+    
+    /* Typography */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    
+    /* Structure */
+    --border-radius: 8px; 
+    --border-subtle: 1px solid #E3E3E0;
+    
+    /* Depth */
+    --shadow-sm: 0 4px 12px rgba(28, 35, 33, 0.03);
+    --shadow-md: 0 12px 32px rgba(28, 35, 33, 0.08);
+    
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px; 
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+h2 { font-size: 2.75rem; margin-bottom: 1rem; }
+h3 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; }
+
+p {
+    margin-bottom: 1.2rem;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5rem;
+    background-color: rgba(28, 35, 33, 0.98); /* Changed to dark to match hero */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--surface-color);
+}
+
+.nav-brand span {
+    color: var(--accent-high-risk);
+    font-style: italic;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 2.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+}
+
+.nav-links a:hover {
+    color: var(--surface-color);
+}
+
+.nav-cta {
+    background-color: var(--accent-high-risk);
+    color: var(--surface-color) !important;
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
+}
+
+.nav-cta:hover {
+    background-color: #bf4d2c;
+    transform: translateY(-2px);
+}
+
+.nav-github {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--surface-color);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    padding: 0 5rem;
+    background-color: var(--text-primary); /* Deep Forest Green for the pop of color */
+    border-bottom: 4px solid var(--accent-high-risk); /* Bold accent line */
+    color: var(--surface-color);
+}
+
+.hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    letter-spacing: -1px;
+    color: var(--surface-color);
+}
+
+.hero .subtitle {
+    font-size: 1.35rem;
+    max-width: 700px;
+    margin: 0 auto 4rem auto;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 6rem; 
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 3rem;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.stat-value {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--surface-color);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.rf-value {
+    font-size: 2.8rem;
+    white-space: nowrap;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   General Section Layouts
+   ========================================================================== */
+section {
+    padding: 8rem 5rem; 
+}
+
+#data-eng, #modeling, #playground {
+    background-color: #F0F0ED; 
+    border-top: var(--border-subtle);
+    border-bottom: var(--border-subtle);
+}
+
+.section-header {
+    margin-bottom: 5rem;
+    max-width: 700px;
+}
+
+.section-header h2 {
+    font-size: 3rem;
+    letter-spacing: -0.5px;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+}
+
+.grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem; 
+    align-items: stretch; /* Make cards equal height */
+}
+
+.grid-3-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    align-items: stretch;
+}
+
+/* ==========================================================================
+   Cards & UI Elements
+   ========================================================================== */
+.text-card, .model-card, .tech-card, .chart-card, .patient-file, .inference-card {
+    background-color: var(--surface-color);
+    padding: 3rem;
+    border: var(--border-subtle);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Center charts vertically within their card */
+.chart-card {
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.chart-card canvas {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.model-card:hover, .tech-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+}
+
+.tech-icon {
+    font-size: 2.2rem;
+    color: var(--accent-high-risk);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.winner-card {
+    border-top: 4px solid var(--accent-high-risk);
+    position: relative;
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.winner-card h3 {
+    color: var(--accent-high-risk);
+}
+
+.winner-badge {
+    position: absolute;
+    top: -14px;
+    left: 20px;
+    background-color: var(--accent-high-risk);
+    color: var(--surface-color);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(217, 93, 57, 0.3);
+}
+
+.feature-list {
+    list-style: none;
+    margin-top: 2rem;
+}
+
+.feature-list li {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+    font-size: 1.05rem;
+}
+
+.feature-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent-high-risk);
+    font-weight: bold;
+}
+
+.metric-highlight {
+    margin: 2.5rem 0;
+    padding: 2rem;
+    background-color: var(--bg-color); 
+    border: var(--border-subtle);
+    border-left: 6px solid var(--accent-high-risk); /* Swapped to Terracotta for pop */
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+}
+
+.metric-name {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.metric-score {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+/* ==========================================================================
+   Interactive Playground
+   ========================================================================== */
+.playground-container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 5rem;
+}
+
+.persona-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.persona-btn {
+    background: var(--surface-color);
+    border: var(--border-subtle);
+    padding: 1.5rem;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+}
+
+.persona-btn:hover {
+    transform: translateX(5px);
+    border-color: var(--text-secondary);
+}
+
+.persona-btn.active {
+    background-color: var(--text-primary);
+    border-color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.persona-btn.active .persona-title, 
+.persona-btn.active .persona-desc {
+    color: var(--surface-color);
+}
+
+.persona-title {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.persona-desc {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.playground-results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.file-header {
+    border-bottom: 2px solid var(--accent-neutral);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--accent-neutral);
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item .label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.detail-item .value {
+    font-weight: 600;
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.inference-result {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin: 2rem 0;
+    padding: 1.5rem 2rem;
+    border-radius: 6px;
+}
+
+.status-indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.inference-result h2 { 
+    margin-bottom: 0; 
+    font-size: 1.6rem;
+}
+
+.risk-high {
+    background-color: rgba(217, 93, 57, 0.08);
+    border: 1px solid rgba(217, 93, 57, 0.3);
+}
+.risk-high h2 { color: var(--accent-high-risk); }
+.risk-high .status-indicator { background-color: var(--accent-high-risk); box-shadow: 0 0 12px rgba(217, 93, 57, 0.4); }
+
+.risk-low {
+    background-color: rgba(91, 140, 112, 0.08);
+    border: 1px solid rgba(91, 140, 112, 0.3);
+}
+.risk-low h2 { color: var(--accent-low-risk); }
+.risk-low .status-indicator { background-color: var(--accent-low-risk); box-shadow: 0 0 12px rgba(91, 140, 112, 0.4); }
+
+/* ==========================================================================
+   Footer (Fixed Alignment)
+   ========================================================================== */
+footer {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: var(--text-primary);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+.section-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+@media (max-width: 1300px) {
+    .navbar { padding: 1.5rem 3rem; }
+    
+    .mobile-menu-toggle { display: block; }
+    
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: rgba(28, 35, 33, 0.98);
+        padding: 2rem;
+        gap: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: var(--transition-smooth);
+    }
+    
+    .nav-links.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .nav-links a {
+        margin-left: 0;
+        font-size: 1.1rem;
+    }
+    
+    .nav-cta {
+        display: inline-block;
+        text-align: center;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    section { padding: 6rem 3rem; }
+    .hero { padding: 6rem 3rem; }
+    .grid-2-col, .grid-3-col, .playground-container, .playground-results { gap: 3rem; }
+}
+
+@media (max-width: 992px) {
+    .hero h1 { font-size: 4rem; }
+    .grid-2-col, .grid-3-col, .playground-container, .playground-results { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 3rem; }
+    .chart-card { min-height: 300px; }
+}
+
+@media (max-width: 768px) {
+    .navbar { padding: 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 4rem 1.5rem; }
+    .hero h1 { font-size: 3rem; }
+    .hero-content { text-align: left; }
+    .hero-stats { justify-content: flex-start; }
+    .stat-box { align-items: flex-start; }
+    .text-card, .model-card, .tech-card, .chart-card, .patient-file, .inference-card { padding: 2rem; }
+}

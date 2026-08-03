@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Readmission Prediction</title>
+    
+    <!-- Typography: Playfair Display (Serif) and Inter (Sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Readmission<span>Predict</span></div>
+        <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </button>
+        <div class="nav-links">
+            <a href="#data-eng">Data Engineering</a>
+            <a href="#deep-dive">Technical Deep Dive</a>
+            <a href="#modeling">Modeling</a>
+            <a href="#results">Results</a>
+            <a href="https://github.com/hassaan1shakil/Prediction-of-Hospital-Readmission-For-Patients" target="_blank" rel="noopener noreferrer" class="nav-github">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"></path>
+                </svg>
+                GitHub
+            </a>
+            <a href="#playground" class="nav-cta">Interactive Playground</a>
+        </div>
+    </nav>
+
+    <header class="hero section-reveal">
+        <div class="hero-content">
+            <h1>Predicting 30-Day Hospital Readmissions.</h1>
+            <p class="subtitle">An end-to-end machine learning pipeline analyzing patient encounter data to identify high-risk readmissions before they happen.</p>
+            <div class="hero-stats">
+                <div class="stat-box">
+                    <span class="stat-value">~100k</span>
+                    <span class="stat-label">Patient Encounters</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">200+</span>
+                    <span class="stat-label">Engineered Features</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value rf-value">Random Forest</span>
+                    <span class="stat-label">Winning Model</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Data Engineering Section -->
+        <section id="data-eng" class="section-reveal">
+            <div class="section-header">
+                <h2>01. Data Engineering</h2>
+                <p>Handling sparse medical records and engineering temporal features.</p>
+            </div>
+            <div class="grid-2-col">
+                <div class="text-card">
+                    <h3>The Challenge of Medical Data</h3>
+                    <p>Patient encounter data is inherently messy. Our dataset included up to 25 sparse diagnosis and procedure codes per patient.</p>
+                    <ul class="feature-list">
+                        <li><strong>Cascading Imputation:</strong> Missing ICD-10 and procedure codes were systematically zero-filled to maintain data structure.</li>
+                        <li><strong>Temporal Engineering:</strong> Calculated <code>Days Admitted</code> from admission and discharge dates, flagging stays over 7 days as <code>Long_Stay</code>.</li>
+                        <li><strong>Clinical Categorization:</strong> Mapped granular DRG and ICD codes to 29 broad clinical categories (e.g., <em>CIRCULATORY</em>, <em>RESPIRATORY</em>) to reduce dimensionality.</li>
+                    </ul>
+                </div>
+                <div class="chart-card">
+                    <canvas id="daysAdmittedChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Deep Dive Section -->
+        <section id="deep-dive" class="section-reveal">
+            <div class="section-header">
+                <h2>02. Technical Deep Dive</h2>
+                <p>Architectural decisions made to handle clinical data constraints securely and optimally.</p>
+            </div>
+            <div class="grid-2-col">
+                <div class="tech-card">
+                    <div class="tech-icon">{ }</div>
+                    <h3>Domain-Specific Parsing</h3>
+                    <p>Rather than blindly applying generic string encoding to the primary diagnosis (<code>AD_DGNS</code>), a custom parsing engine was built. By stripping the first character and mapping alphanumeric structures, ICD-10 codes were algorithmically bucketed into 23 high-level clinical categories (e.g., <em>C-series</em> → <em>NEOPLASMS</em>), retaining strict medical domain significance.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">O(1)</div>
+                    <h3>Dimensionality Constraint</h3>
+                    <p>With up to 50 sparse columns per row for historical diagnoses and procedures, One-Hot Encoding would have exploded the feature space into the tens of thousands. <code>collections.Counter</code> was utilized across all sparse columns to strictly isolate and encode only the <strong>Top 200</strong> most frequent signals, preserving RAM and preventing the curse of dimensionality.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🔒</div>
+                    <h3>Data Leakage Prevention</h3>
+                    <p>To ensure absolutely no look-ahead bias, all category encoders (including DRG and ICD categorizers) were instantiated with <code>handle_unknown='ignore'</code> and fit <em>strictly</em> on the training subset. Test data permutations were safely routed through the frozen transformer states.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🎯</div>
+                    <h3>The Accuracy Paradox</h3>
+                    <p>In highly imbalanced readmission data, a model predicting "No Readmission" universally will still achieve ~80% accuracy. The pipeline explicitly evaluates against this paradox by utilizing <strong>ROC AUC</strong> and analyzing precision/recall trade-offs via <code>ConfusionMatrixDisplay</code>, alongside testing <code>ComplementNB</code>, which is mathematically suited for imbalanced data.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modeling Section -->
+        <section id="modeling" class="section-reveal">
+            <div class="section-header">
+                <h2>03. Modeling Pipeline</h2>
+                <p>Evaluating multiple architectures against severe class imbalance.</p>
+            </div>
+            <div class="grid-3-col">
+                <div class="model-card">
+                    <h3>Tree-Based Ensembles</h3>
+                    <p><strong>XGBoost & LightGBM:</strong> Handled the high-dimensional, sparse data exceptionally well, but required heavy tuning to prevent overfitting on the majority class.</p>
+                </div>
+                <div class="model-card winner-card">
+                    <div class="winner-badge">★ WINNING MODEL</div>
+                    <h3>Random Forest</h3>
+                    <p><strong>The Winner:</strong> Using 200 estimators and entropy criterion, RF provided the most stable balance between accuracy and interpretability without aggressive overfitting.</p>
+                </div>
+                <div class="model-card">
+                    <h3>Naive Bayes Variants</h3>
+                    <p><strong>ComplementNB:</strong> Evaluated specifically to tackle the class imbalance, as it is designed for imbalanced datasets, though it ultimately fell short of tree-based methods.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="section-reveal">
+            <div class="section-header">
+                <h2>04. Results & Evaluation</h2>
+                <p>The struggle with recall in highly imbalanced medical datasets.</p>
+            </div>
+            <div class="grid-2-col">
+                <div class="chart-card">
+                    <canvas id="rocChart"></canvas>
+                </div>
+                <div class="text-card">
+                    <h3>Performance vs. Reality</h3>
+                    <p>While absolute accuracy remained high across the board, the true test was the ROC AUC and Recall on the minority class (actual readmissions).</p>
+                    <div class="metric-highlight">
+                        <span class="metric-name">Random Forest ROC AUC</span>
+                        <span class="metric-score">0.68+</span>
+                    </div>
+                    <p class="small-text">The confusion matrices revealed that while tree-based models successfully identified true negatives, predicting true positives (readmissions) remains a significant challenge due to the lack of strong signal in the billing-oriented ICD codes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Playground -->
+        <section id="playground" class="section-reveal">
+            <div class="section-header">
+                <h2>05. Interactive Playground</h2>
+                <p>Select a patient persona to see how the model evaluates risk.</p>
+            </div>
+            
+            <div class="playground-container">
+                <div class="persona-selector">
+                    <button class="persona-btn active" data-persona="1">
+                        <span class="persona-title">Persona A</span>
+                        <span class="persona-desc">High Risk Profile</span>
+                    </button>
+                    <button class="persona-btn" data-persona="2">
+                        <span class="persona-title">Persona B</span>
+                        <span class="persona-desc">Low Risk Profile</span>
+                    </button>
+                    <button class="persona-btn" data-persona="3">
+                        <span class="persona-title">Persona C</span>
+                        <span class="persona-desc">Borderline Case</span>
+                    </button>
+                </div>
+
+                <div class="playground-results">
+                    <div class="patient-file">
+                        <div class="file-header">
+                            <h3>Patient Profile</h3>
+                        </div>
+                        <div class="file-details">
+                            <div class="detail-item">
+                                <span class="label">Days Admitted</span>
+                                <span class="value" id="val-days">14 Days</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Total Diagnoses</span>
+                                <span class="value" id="val-diag">10</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Total Procedures</span>
+                                <span class="value" id="val-proc">5</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Primary Category</span>
+                                <span class="value" id="val-cat">CIRCULATORY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inference-card">
+                        <h3>Model Inference</h3>
+                        <div class="inference-result risk-high" id="inference-status">
+                            <div class="status-indicator"></div>
+                            <h2 id="result-text">High Readmission Risk</h2>
+                        </div>
+                        <p class="inference-desc" id="result-desc">The combination of a long stay and multiple circulatory diagnoses strongly correlates with 30-day readmission.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built for portfolio demonstration. Analyzes over 100,000 hospital encounters.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
